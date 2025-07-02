@@ -40,11 +40,33 @@ import React, { useState, useEffect } from 'react';
        }
      };
 
-     if (!flashcards.length) return <div>No flashcards available</div>;
+     const handleReview = async (quality) => {
+       try {
+         await axios.post(`http://localhost:5000/api/flashcards/${flashcards[currentIndex]._id}/review`, { quality }, { withCredentials: true });
+         setFlipped(false);
+         if (currentIndex < flashcards.length - 1) {
+           setCurrentIndex(currentIndex + 1);
+         } else {
+           setFlashcards([]);
+         }
+       } catch (error) {
+         alert('Error submitting review');
+       }
+     };
+
+     if (!flashcards.length) {
+       return (
+         <div className="flex flex-col items-center">
+           <h2 className="text-2xl mb-4">Flashcard Viewer</h2>
+           <p>No flashcards due for review. Try again later or add new flashcards!</p>
+           <Link to={`/decks/${deckId}/flashcards/create`} className="mt-4 bg-green-600 text-white px-4 py-2 rounded">Add Flashcard</Link>
+         </div>
+       );
+     }
 
      return (
        <div className="flex flex-col items-center">
-         <h2 className="text-2xl mb-4">Flashcard Viewer</h2>
+         <h2 className="text-2xl mb-4">Flashcard Viewer (Spaced Repetition)</h2>
          <div className="flip-card" onClick={() => setFlipped(!flipped)}>
            <div className={`flip-card-inner ${flipped ? 'flipped' : ''}`}>
              <div className="flip-card-front w-96 h-64 bg-blue-200 flex items-center justify-center rounded shadow">
@@ -56,11 +78,18 @@ import React, { useState, useEffect } from 'react';
            </div>
          </div>
          <div className="mt-4 space-x-4">
-           <button onClick={handlePrev} className="bg-blue-600 text-white px-4 py-2 rounded">Previous</button>
-           <button onClick={handleNext} className="bg-blue-600 text-white px-4 py-2 rounded">Next</button>
+           <button onClick={handlePrev} className="bg-blue-600 text-white px-4 py-2 rounded" disabled={currentIndex === 0}>Previous</button>
+           <button onClick={handleNext} className="bg-blue-600 text-white px-4 py-2 rounded" disabled={currentIndex === flashcards.length - 1}>Next</button>
            <Link to={`/decks/${deckId}/flashcards/${flashcards[currentIndex]._id}/edit`} className="bg-yellow-600 text-white px-4 py-2 rounded">Edit</Link>
            <button onClick={() => handleDelete(flashcards[currentIndex]._id)} className="bg-red-600 text-white px-4 py-2 rounded">Delete</button>
          </div>
+         {flipped && (
+           <div className="mt-4 space-x-4">
+             <button onClick={() => handleReview(1)} className="bg-red-600 text-white px-4 py-2 rounded">Hard</button>
+             <button onClick={() => handleReview(3)} className="bg-yellow-600 text-white px-4 py-2 rounded">Good</button>
+             <button onClick={() => handleReview(5)} className="bg-green-600 text-white px-4 py-2 rounded">Easy</button>
+           </div>
+         )}
        </div>
      );
    }
