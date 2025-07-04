@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './CreateFlashcard.css'; // Import CreateFlashcard.css from client/src
 
 function CreateFlashcard() {
   const { deckId } = useParams();
+  const navigate = useNavigate();
   const [front, setFront] = useState('');
   const [back, setBack] = useState('');
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,25 +20,15 @@ function CreateFlashcard() {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded shadow">
-      <h2 className="text-2xl mb-4">Create Flashcard</h2>
-      <div className="space-y-4">
-        <input
-          type="text"
-          placeholder="Front (Question)"
-          value={front}
-          onChange={(e) => setFront(e.target.value)}
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="text"
-          placeholder="Back (Answer)"
-          value={back}
-          onChange={(e) => setBack(e.target.value)}
-          className="w-full p-2 border rounded"
-        />
-        <button onClick={handleSubmit} className="w-full bg-blue-600 text-white p-2 rounded">Create</button>
-      </div>
+    <div className="create-flashcard-container">
+      <h2>Create Flashcard</h2>
+      <form onSubmit={handleSubmit}>
+        <label>Front:</label>
+        <textarea value={front} onChange={(e) => setFront(e.target.value)} />
+        <label>Back:</label>
+        <textarea value={back} onChange={(e) => setBack(e.target.value)} />
+        <button type="submit">Create</button>
+      </form>
     </div>
   );
 }
