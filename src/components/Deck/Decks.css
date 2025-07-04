@@ -78,11 +78,8 @@ body {
 /* Deck Grid Wrapper (assuming you've added this class to the parent div in JSX) */
 .decks-grid-wrapper {
     display: grid;
-    /* *** KEY CHANGE: Increased min-width for individual decks *** */
-    /* This aims for 2 columns on most standard desktops, with wider cards. */
-    /* Adjust '450px' further if you want them even wider and fewer per row. */
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-    gap: 25px; /* Slightly reduced gap for a tighter "deck" look, adjust as needed */
+    grid-template-columns: repeat(4, 1fr); /* Force any number of decks per row */
+    gap: 30px;
     justify-content: center;
     padding-top: 20px;
 }
@@ -92,20 +89,24 @@ body {
     background: linear-gradient(145deg, #ffffff, #f0f0f0);
     border-radius: 15px;
     padding: 25px;
-    /* margin-bottom removed, gap handles spacing in grid */
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* *** KEY CHANGE: Adjusted min-height for a more horizontal "deck" look *** */
-    min-height: 250px; /* Reduced min-height to make cards wider relative to their height */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(255, 255, 255, 0.6) inset; /* Inner glow for deck effect */
+
+    width: 100%;
+    height: 400px; /* Taller height for real-deck feel */
+    max-width: 250px; /* Limit width to keep them narrow */
+    margin: 0 auto; /* Center cards inside grid cells */
+
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(255, 255, 255, 0.6) inset;
     transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     position: relative;
     overflow: hidden;
     animation: slideIn 0.6s ease-out forwards;
     transform-origin: top center;
-    perspective: 1000px; /* For 3D tilt effect */
+    perspective: 1000px;
 }
+
 
 /* Animation for individual deck cards */
 @keyframes slideIn {
