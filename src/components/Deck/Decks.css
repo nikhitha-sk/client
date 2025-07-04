@@ -1,8 +1,8 @@
-/* Decks.css */
+/* Decks.css - Revised for Side-by-Side Alignment and Stronger Buttons */
 
 /* General Body Styling */
 body {
-    background-color: #f0f2f5; /* Light greyish blue background */
+    background-color: #eef2f6; /* A very light, cool grey/blue for a fresh background */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
@@ -14,16 +14,16 @@ body {
 
 /* Decks Container */
 .decks-container {
-    width: 90%;
-    max-width: 1200px;
+    width: 95%;
+    max-width: 1400px;
     margin: 40px auto;
     padding: 30px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.08));
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 12px 45px 0 rgba(0, 0, 0, 0.15); /* Slightly stronger shadow for the container */
     color: #333;
     animation: fadeIn 1s ease-out;
 }
@@ -36,77 +36,109 @@ body {
 /* Page Title */
 .decks-container h2 {
     text-align: center;
-    color: #2c3e50;
-    margin-bottom: 30px;
-    font-size: 2.5em;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    color: #34495e; /* Darker blue-grey for title */
+    margin-bottom: 35px;
+    font-size: 3em;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 /* Create New Deck Button */
 .create-deck-btn {
     display: block;
     width: fit-content;
-    margin: 0 auto 30px auto;
-    padding: 12px 25px;
-    background-color: #28a745; /* Green */
+    margin: 0 auto 40px auto;
+    padding: 14px 30px;
+    background-color: #28a745; /* Stronger green */
     color: white;
     text-decoration: none;
-    border-radius: 8px;
-    font-size: 1.1em;
+    border-radius: 10px;
+    font-size: 1.15em;
     font-weight: bold;
+    letter-spacing: 0.7px;
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .create-deck-btn:hover {
-    background-color: #218838;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background-color: #218838; /* Darker green on hover */
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* No Decks Available Message */
 .text-gray-600 {
-    color: #606060;
-    font-size: 1.2em;
-    padding: 20px;
+    color: #777;
+    font-size: 1.3em;
+    padding: 30px;
     border: 1px dashed #ccc;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.7);
     margin-top: 30px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
-/* Deck Card Styling */
+/* Deck Cards Grid Layout Container */
+/* This specific selector targets the div where the decks are mapped */
+.decks-container > div:nth-of-type(3) { /* Assuming the deck list div is the 3rd child after h2 and create button */
+    display: grid;
+    /* This sets up the columns for 2-3 decks side-by-side */
+    /* On larger screens, it will create 3 columns of minimum 300px width.
+       If space is tight, it adjusts, eventually dropping to 2 columns, then 1. */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px; /* Space between decks */
+    justify-content: center;
+    padding-top: 20px;
+}
+/* Fallback if the above selector is too specific due to other elements */
+/* You might want to wrap your `decks.map` output in a dedicated div with a class like `decks-grid-wrapper` */
+/* .decks-grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    justify-content: center;
+    padding-top: 20px;
+} */
+
+
+/* Deck Card Styling (White Decks) */
 .deck-card {
-    background: linear-gradient(145deg, #ffffff, #f0f0f0);
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 25px;
+    background-color: #ffffff; /* Pure white */
+    border-radius: 20px; /* Slightly more rounded */
+    padding: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15), 0 0 0 3px rgba(255, 255, 255, 0.6) inset; /* Inner glow for deck effect */
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    justify-content: space-between;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), /* Stronger but soft shadow */
+                0 0 0 5px rgba(240, 240, 240, 0.8) inset, /* Inner glow, closer to white */
+                0 0 0 8px rgba(0, 0, 0, 0.03); /* Very subtle outer border */
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
     position: relative;
     overflow: hidden;
-    animation: slideIn 0.6s ease-out forwards;
-    transform-origin: top center;
-    perspective: 1000px; /* For 3D tilt effect */
+    animation: slideIn 0.7s ease-out forwards; /* Slightly longer animation */
+    transform-origin: center center;
+    perspective: 1200px; /* Enhanced perspective for 3D effect */
+    min-height: 350px; /* More pronounced vertical rectangular shape */
+    /* max-width: 320px; */ /* Removed max-width here to let grid control width more freely */
+    margin: 0 auto; /* Center individual cards in their grid cell */
+    border: 1px solid rgba(220, 220, 220, 0.5); /* Subtle light grey border */
 }
 
 /* Animation for individual deck cards */
 @keyframes slideIn {
-    from { opacity: 0; transform: translateY(20px) scale(0.9); }
+    from { opacity: 0; transform: translateY(40px) scale(0.85); }
     to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .deck-card:nth-child(even) {
-    animation-delay: 0.1s; /* Staggered animation */
+    animation-delay: 0.1s;
 }
 .deck-card:nth-child(odd) {
-    animation-delay: 0.05s; /* Staggered animation */
+    animation-delay: 0.05s;
 }
 
-
+/* Glass Overlay on Card */
 .deck-card::before {
     content: '';
     position: absolute;
@@ -114,36 +146,43 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.08)); /* More prominent glass reflection */
     z-index: 1;
-    border-radius: 15px;
-    pointer-events: none; /* Allows clicks on content below */
+    border-radius: 20px;
+    pointer-events: none;
 }
 
 .deck-card h3 {
-    color: #34495e;
-    margin-bottom: 20px;
-    font-size: 1.8em;
-    font-weight: 600;
+    color: #4a4a4a; /* Darker grey for title contrast on white */
+    margin-bottom: 25px;
+    font-size: 2.2em; /* Slightly larger title */
+    font-weight: 700;
     text-align: center;
     position: relative;
     z-index: 2;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 15px;
 }
 
 /* Hover Effect for Deck Cards */
 .deck-card:hover {
-    transform: translateY(-8px) rotateX(3deg); /* Slight lift and tilt */
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25), 0 0 0 3px rgba(255, 255, 255, 0.8) inset;
-    z-index: 10; /* Bring hovered card to front */
+    transform: translateY(-15px) rotateX(5deg) scale(1.05); /* More aggressive lift, tilt, and scale */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), /* Enhanced shadow on hover */
+                0 0 0 5px rgba(255, 255, 255, 1) inset, /* Bright inner glow */
+                0 0 0 10px rgba(0, 0, 0, 0.05); /* Slightly more prominent outer border */
+    z-index: 10;
 }
 
-/* Deck Actions Container */
+/* Deck Actions Container (Buttons Stacked Vertically) */
 .deck-actions {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 15px;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px; /* More space between buttons */
+    margin-top: 20px;
     position: relative;
     z-index: 2;
 }
@@ -151,109 +190,140 @@ body {
 /* Action Buttons */
 .deck-actions a,
 .deck-actions button {
-    padding: 10px 20px;
-    border-radius: 8px;
+    padding: 12px 18px; /* Slightly larger buttons */
+    border-radius: 10px; /* More rounded button corners */
     text-decoration: none;
     color: white;
     font-weight: 600;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    flex-grow: 1; /* Allows buttons to grow */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12); /* Softer button shadow */
     text-align: center;
-    min-width: 150px; /* Ensure a minimum width for readability */
+    font-size: 1em;
+    letter-spacing: 0.3px;
 }
 
-/* Specific Button Colors and Hover Effects */
+/* Specific Button Colors and Hover Effects (Stronger palette) */
 .deck-actions .bg-blue-600 { /* View Flashcards */
-    background-color: #3498db;
+    background-color: #3b82f6; /* Tailwind blue-600 */
 }
 .deck-actions .bg-blue-600:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background-color: #2563eb; /* Tailwind blue-700 */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
 }
 
 .deck-actions .bg-green-600 { /* Add Flashcard */
-    background-color: #2ecc71;
+    background-color: #16a34a; /* Tailwind green-600 */
 }
 .deck-actions .bg-green-600:hover {
-    background-color: #27ae60;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background-color: #15803d; /* Tailwind green-700 */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
 }
 
 .deck-actions .bg-yellow-600 { /* Edit Deck */
-    background-color: #f39c12;
+    background-color: #d97706; /* Tailwind yellow-700 */
 }
 .deck-actions .bg-yellow-600:hover {
-    background-color: #e67e22;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background-color: #b45309; /* Tailwind yellow-800 */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
 }
 
 .deck-actions .bg-red-600 { /* Delete Deck */
-    background-color: #e74c3c;
+    background-color: #dc2626; /* Tailwind red-600 */
 }
 .deck-actions .bg-red-600:hover {
-    background-color: #c0392b;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background-color: #b91c1c; /* Tailwind red-700 */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+    .decks-container > div:nth-of-type(3) { /* Target the grid wrapper */
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+    }
+    .deck-card {
+        min-height: 320px;
+    }
+}
+
+@media (max-width: 992px) {
+    .decks-container > div:nth-of-type(3) { /* Target the grid wrapper */
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 25px;
+    }
+    .deck-card {
+        min-height: 300px;
+        max-width: unset; /* Allow cards to stretch within their grid cell */
+    }
+    .decks-container h2 {
+        font-size: 2.5em;
+    }
+}
+
 @media (max-width: 768px) {
     .decks-container {
         width: 95%;
-        padding: 20px;
-        margin: 20px auto;
+        padding: 25px;
+        margin: 25px auto;
     }
-
     .decks-container h2 {
-        font-size: 2em;
+        font-size: 2.2em;
+        margin-bottom: 30px;
     }
-
     .create-deck-btn {
-        font-size: 1em;
-        padding: 10px 20px;
+        font-size: 1.05em;
+        padding: 12px 25px;
+        margin-bottom: 30px;
     }
-
+    .decks-container > div:nth-of-type(3) { /* Target the grid wrapper */
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
     .deck-card {
-        padding: 20px;
+        padding: 25px;
+        min-height: 280px;
+        max-width: unset; /* Allow cards to stretch within their grid cell */
     }
-
     .deck-card h3 {
-        font-size: 1.5em;
+        font-size: 1.8em;
     }
-
-    .deck-actions {
-        flex-direction: column;
-        gap: 10px;
-    }
-
     .deck-actions a,
     .deck-actions button {
-        width: 100%;
-        min-width: unset;
+        font-size: 0.95em;
+        padding: 10px 15px;
     }
 }
 
 @media (max-width: 480px) {
     .decks-container {
-        padding: 15px;
-        margin: 15px auto;
+        padding: 18px;
+        margin: 18px auto;
     }
-
     .decks-container h2 {
-        font-size: 1.8em;
+        font-size: 1.9em;
+        margin-bottom: 25px;
     }
-
+    .decks-container > div:nth-of-type(3) { /* Target the grid wrapper */
+        grid-template-columns: 1fr; /* Stack cards vertically on very small screens */
+        gap: 20px;
+    }
     .deck-card {
-        padding: 15px;
+        padding: 20px;
+        min-height: 250px;
+        max-width: 90%; /* Allow cards to take more width on small screens */
     }
-
     .deck-card h3 {
-        font-size: 1.3em;
+        font-size: 1.6em;
+    }
+    .deck-actions a,
+    .deck-actions button {
+        font-size: 0.9em;
+        padding: 8px 12px;
     }
 }
